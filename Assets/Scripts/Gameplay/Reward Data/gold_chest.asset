@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item_id: gold_chest
   icon: {fileID: 21300000, guid: e5aaf04314eead441a8d5a54e702624a, type: 3}
+  importance: 0
+  stackable: 1

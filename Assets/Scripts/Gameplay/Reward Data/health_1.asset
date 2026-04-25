@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item_id: health_1
   icon: {fileID: 21300000, guid: cd2b897c62a153844ba4109d53fc5238, type: 3}
+  importance: 0
+  stackable: 1

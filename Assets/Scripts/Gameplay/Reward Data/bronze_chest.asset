@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item_id: bronze_chest
   icon: {fileID: 21300000, guid: 2894f31c2184d9649a232758bc9ead6e, type: 3}
+  importance: 0
+  stackable: 1

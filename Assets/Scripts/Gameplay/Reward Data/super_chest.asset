@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item_id: super_chest
   icon: {fileID: 21300000, guid: 0b391e46865708b4da7a86cfea15edfe, type: 3}
+  importance: 0
+  stackable: 1

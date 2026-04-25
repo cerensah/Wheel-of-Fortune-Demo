@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item_id: grenade_m26
   icon: {fileID: 21300000, guid: 913da7f40cd09a2488e02544727dad86, type: 3}
+  importance: 1
+  stackable: 1

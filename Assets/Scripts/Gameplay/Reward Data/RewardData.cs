@@ -21,4 +21,5 @@ public class RewardData : ScriptableObject
     public string item_id;
     public Sprite icon;
     public RewardImportance importance;
+    public bool stackable; //some items like guns,knifes etc. -> i dont want to stack, the amount can only be 1. Coins etc can be stacked
 }

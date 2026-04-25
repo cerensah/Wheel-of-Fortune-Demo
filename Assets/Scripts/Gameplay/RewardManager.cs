@@ -65,10 +65,11 @@ public class RewardManager : MonoBehaviour
         while(currentWheelRewards.Count < 8) {
             int randomIdx = UnityEngine.Random.Range(0, allRewards.Count);
 
+            RewardData reward = allRewards[randomIdx];
             currentWheelRewards.Add(new WheelReward
             {
-                data = allRewards[randomIdx],
-                amount = GenerateRewardAmount(allRewards[randomIdx].importance)
+                data = reward,
+                amount = reward.stackable? GenerateRewardAmount(allRewards[randomIdx].importance) : 1 //if stackable amount is generated, else just 1
             });
         }
 

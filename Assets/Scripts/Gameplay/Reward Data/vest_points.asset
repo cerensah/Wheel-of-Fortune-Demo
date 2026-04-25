@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item_id: vest_points
   icon: {fileID: 21300000, guid: dd81a6d5e4007d049b053b70d5d4439b, type: 3}
+  importance: 0
+  stackable: 1

@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item_id: pistol_points
   icon: {fileID: 21300000, guid: 09a5ee99cc095fe4f8a4b38c7779f3b0, type: 3}
+  importance: 0
+  stackable: 1

@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item_id: armor_points
   icon: {fileID: 21300000, guid: 470dfbff9095f9144b867ce5f654d39e, type: 3}
+  importance: 0
+  stackable: 1

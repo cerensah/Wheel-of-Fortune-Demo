@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item_id: mle_bayonet
   icon: {fileID: 21300000, guid: eda58fd5d9df0ba438fb8f5313326329, type: 3}
+  importance: 2
+  stackable: 0

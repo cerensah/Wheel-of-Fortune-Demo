@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item_id: gold
   icon: {fileID: 21300000, guid: 15dc4ab65f2a13646bc0ab0e3db01518, type: 3}
+  importance: 2
+  stackable: 1

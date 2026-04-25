@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item_id: smg_tier3
   icon: {fileID: 21300000, guid: 7fc2f574b8b89de44b9b836df8b7b455, type: 3}
+  importance: 2
+  stackable: 0
