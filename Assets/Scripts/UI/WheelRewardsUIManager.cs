@@ -22,7 +22,7 @@ public class WheelRewardsUIManager : MonoBehaviour
             RewardManager.Instance.OnRewardPicked += AddCollectedRewardUI;
         }
 
-        GameManager.Instance.OnGameOver += ClearCollectedUI;
+        GameManager.Instance.OnGiveUp += ClearCollectedUI;
     }
 
     private void OnDisable()
@@ -33,7 +33,7 @@ public class WheelRewardsUIManager : MonoBehaviour
             RewardManager.Instance.OnRewardPicked -= AddCollectedRewardUI;
         }
 
-        GameManager.Instance.OnGameOver -= ClearCollectedUI;
+        GameManager.Instance.OnGiveUp -= ClearCollectedUI;
     }
 
     private void RefreshWheelUI()

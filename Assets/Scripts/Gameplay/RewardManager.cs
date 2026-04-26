@@ -32,7 +32,7 @@ public class RewardManager : MonoBehaviour
         if(GameManager.Instance != null)
         {
             GameManager.Instance.OnWheelRotated += AddReward;
-            GameManager.Instance.OnGameOver += ClearCollectedRewards;
+            GameManager.Instance.OnGiveUp += ClearCollectedRewards;
         }
 
         RandomizeRewards();
@@ -43,7 +43,7 @@ public class RewardManager : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnWheelRotated -= AddReward;
-            GameManager.Instance.OnGameOver -= ClearCollectedRewards;
+            GameManager.Instance.OnGiveUp -= ClearCollectedRewards;
         }
 
     }

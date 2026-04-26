@@ -7,7 +7,7 @@ public enum GameState
 {
     Default,
     GameOver,
-    Revived
+    GiveUp
 }
 public class GameManager : MonoBehaviour
 {
@@ -18,8 +18,11 @@ public class GameManager : MonoBehaviour
 
     public event Action<int> OnWheelRotated;
     public event Action OnGameOver;
+    public event Action OnGiveUp;
 
-    private int coin;
+    private bool hasRevived;
+
+    private int coin = 100;
 
     private void Awake()
     {
@@ -47,6 +50,9 @@ public class GameManager : MonoBehaviour
         if (gameState == GameState.GameOver)
         {
             OnGameOver?.Invoke();
+        } else if(gameState == GameState.GiveUp)
+        {
+            RefreshGame();
         }
     }
 
@@ -60,10 +66,23 @@ public class GameManager : MonoBehaviour
         return coin >= amount;
     }
 
+    public void SetRevived(bool revived)
+    {
+        hasRevived = revived;
+    }
+
+    public bool GetRevived()
+    {
+        return hasRevived;
+    }
+
     public void RefreshGame()
     {
         zone = 1;
         gameState = GameState.Default;
+        hasRevived = false;
+
+        OnGiveUp?.Invoke();
         RewardManager.Instance.RandomizeRewards();
     }
 }

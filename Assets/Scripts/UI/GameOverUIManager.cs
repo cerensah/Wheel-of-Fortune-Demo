@@ -27,7 +27,7 @@ public class GameOverUIManager : MonoBehaviour
         giveUpButton.onClick.RemoveAllListeners();
         giveUpButton.onClick.AddListener(OnGiveUpClicked);
 
-        bool hasRevived = GameManager.Instance.GetCurrentState() == GameState.Revived;
+        bool hasRevived = GameManager.Instance.GetRevived();
         reviveButton.gameObject.SetActive(!hasRevived); //only show revive if havent revived before
         reviveButton.onClick.RemoveAllListeners();
         reviveButton.onClick.AddListener(OnReviveClicked);
@@ -35,16 +35,17 @@ public class GameOverUIManager : MonoBehaviour
 
     private void OnGiveUpClicked()
     {
+        GameManager.Instance.ChangeGameState(GameState.GiveUp);
         GameManager.Instance.RefreshGame();
         panel.gameObject.SetActive(false);
     }
 
     private void OnReviveClicked()
     {
-        if(GameManager.Instance.GetCurrentState() != GameState.Revived && 
+        if(GameManager.Instance.GetRevived() != true && 
             GameManager.Instance.HasEnoughCoins(GlobalVariables.reviveCost))
         {
-            GameManager.Instance.ChangeGameState(GameState.Revived);
+            GameManager.Instance.SetRevived(true);
         }
 
         panel.gameObject.SetActive(false);
