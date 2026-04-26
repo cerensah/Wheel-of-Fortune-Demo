@@ -7,6 +7,16 @@ using TMPro;
 public class WheelRewardsUIManager : MonoBehaviour
 {
     [Header("Wheel Related UI")]
+    [SerializeField] private Image wheelImage;
+    [SerializeField] private Sprite bronzeWheelSprite;
+    [SerializeField] private Sprite silverWheelSprite;
+    [SerializeField] private Sprite goldWheelSprite;
+
+    [SerializeField] private Image indicatorImage;
+    [SerializeField] private Sprite bronzeIndicatorSprite;
+    [SerializeField] private Sprite silverIndicatorSprite;
+    [SerializeField] private Sprite goldIndicatorSprite;
+
     [SerializeField] private List<Image> rewardImages;
     [SerializeField] private List<TextMeshProUGUI> rewardAmountText;
 
@@ -45,6 +55,24 @@ public class WheelRewardsUIManager : MonoBehaviour
             rewardImages[i].sprite = rewards[i].data.icon;
             rewardAmountText[i].text = $"x {rewards[i].amount}";
         }
+
+        if (GameManager.Instance.zone % 30 == 0)
+        {
+            wheelImage.sprite = goldWheelSprite;
+            indicatorImage.sprite = goldIndicatorSprite;
+        }
+        else if (GameManager.Instance.zone % 5 == 0)
+        {
+            wheelImage.sprite = silverWheelSprite;
+            indicatorImage.sprite = silverIndicatorSprite;
+        }
+        else
+        {
+            wheelImage.sprite = bronzeWheelSprite;
+            indicatorImage.sprite = bronzeIndicatorSprite;
+        }
+
+
     }
 
     private void AddCollectedRewardUI(WheelReward reward)
