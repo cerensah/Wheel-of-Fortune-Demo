@@ -53,6 +53,7 @@ public class RewardManager : MonoBehaviour
 
         zone = GameManager.Instance.zone;
 
+        //only add bomb if the level is not a multiple of 5 or we arnt in the first level
         if(zone % 5 != 0 || zone != 1)
         {
             currentWheelRewards.Add(new WheelReward
@@ -82,7 +83,7 @@ public class RewardManager : MonoBehaviour
     }
 
 
-    private void AddReward(int idx)
+    public void AddReward(int idx)
     {
         var reward = currentWheelRewards[idx];
 

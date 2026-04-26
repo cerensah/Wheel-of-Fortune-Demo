@@ -9,24 +9,27 @@ public class WheelRotator : MonoBehaviour
     [SerializeField] private GameObject obj;
     [SerializeField] private Button spinButton;
 
+    public event Action<int> OnSpinFinished;
+
     private int targetIndex;
     private float sliceAngle => 360f / GlobalVariables.SLICE_COUNT;
-
-    private void OnEnable()
-    {
-        GameManager.Instance.OnWheelRotated += RotateToIndex;
-    }
-
-    private void OnDisable()
-    {
-        GameManager.Instance.OnWheelRotated -= RotateToIndex;
-    }
 
     private void Start()
     {
         spinButton.onClick.RemoveAllListeners();
         spinButton.onClick.AddListener(GameManager.Instance.TurnWheel);
     }
+
+    public void StartSpin(int index)
+    {
+        targetIndex = index;
+
+        float targetAngle =
+            (360f * 4) + (index * sliceAngle);
+
+        StartCoroutine(SpinTo(targetAngle));
+    }
+
 
     private void RotateToIndex(int index)
     {
@@ -61,6 +64,10 @@ public class WheelRotator : MonoBehaviour
         }
 
         obj.transform.eulerAngles = new Vector3(0, 0, targetAngle % 360);
+
+        //waiting a bit so player can see their reward then notify and refresh in Game Manager
+        yield return new WaitForSeconds(0.5f);
+        OnSpinFinished?.Invoke(targetIndex);
 
         spinButton.interactable = true;
     }

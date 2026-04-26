@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class WheelRewardsUIManager : MonoBehaviour
 {
@@ -22,14 +23,20 @@ public class WheelRewardsUIManager : MonoBehaviour
 
     [Header("Previously Collected Rewards UI")]
     [SerializeField] private Transform collectedRewardParent;
+    [SerializeField] private Transform animEndPoint;
     [SerializeField] private GameObject collectedRewardPrefab;
+
+    [Header("Current Reward VFX")]
+    [SerializeField] private GameObject displayPanel, displayImage;
+    [SerializeField] private GameObject sparklePrefab;
+
 
     private void Start()
     {
         if (RewardManager.Instance != null)
         {
             RewardManager.Instance.OnRewardRandomized += RefreshWheelUI;
-            RewardManager.Instance.OnRewardPicked += AddCollectedRewardUI;
+            RewardManager.Instance.OnRewardPicked += RunRewardVFX;
         }
 
         GameManager.Instance.OnGiveUp += ClearCollectedUI;
@@ -40,7 +47,7 @@ public class WheelRewardsUIManager : MonoBehaviour
         if (RewardManager.Instance != null)
         {
             RewardManager.Instance.OnRewardRandomized -= RefreshWheelUI;
-            RewardManager.Instance.OnRewardPicked -= AddCollectedRewardUI;
+            RewardManager.Instance.OnRewardPicked -= RunRewardVFX;
         }
 
         GameManager.Instance.OnGiveUp -= ClearCollectedUI;
@@ -48,6 +55,7 @@ public class WheelRewardsUIManager : MonoBehaviour
 
     private void RefreshWheelUI()
     {
+
         var rewards = RewardManager.Instance.GetCurrentWheelRewards();
 
         for (int i = 0; i < 8; i++)
@@ -72,11 +80,25 @@ public class WheelRewardsUIManager : MonoBehaviour
             indicatorImage.sprite = bronzeIndicatorSprite;
         }
 
-
+        // wheel bounce using DOTween -> feedbakc for user
+        wheelImage.transform.DOScale(1.1f, 0.15f).SetLoops(2, LoopType.Yoyo);
     }
 
-    private void AddCollectedRewardUI(WheelReward reward)
+
+    private void RunRewardVFX(WheelReward reward)
     {
+        StartCoroutine(AddCollectedRewardUI(reward));
+    }
+    private IEnumerator AddCollectedRewardUI(WheelReward reward)
+    {
+        displayPanel.SetActive(true);
+        displayImage.GetComponent<Image>().sprite = reward.data.icon;
+
+        RewardMoveAnimation();
+        PlayRewardSparkleEffect();
+
+        yield return new WaitForSeconds(2f);
+
         GameObject rewardObj = Instantiate(collectedRewardPrefab, collectedRewardParent);
         rewardObj.GetComponent<CollectedRewardUI>().Init(reward.data.icon, reward.amount);
     }
@@ -86,6 +108,63 @@ public class WheelRewardsUIManager : MonoBehaviour
         foreach(Transform child in collectedRewardParent)
         {
             Destroy(child.gameObject);
+        }
+    }
+
+    private void RewardMoveAnimation()
+    {
+        RectTransform rect = displayImage.GetComponent<RectTransform>();
+        rect.transform.position = displayPanel.transform.position;
+
+        // animate to collected panel
+        rect.DOMove(animEndPoint.position, 2f)
+            .SetEase(Ease.OutBack)
+            .OnComplete(() =>
+            {
+                rect.localScale = Vector3.one;
+                displayPanel.SetActive(false);
+            });
+    }
+
+    private void PlayRewardSparkleEffect()
+    {
+
+        for (int i = 0; i < 8; i++)
+        {
+            GameObject sparkle = Instantiate(
+                sparklePrefab,
+                displayPanel.transform
+            );
+
+            RectTransform rt =
+                sparkle.GetComponent<RectTransform>();
+
+            // start at reward center
+            rt.position = wheelImage.transform.position;
+
+            // random spread direction
+            Vector2 randomOffset = new Vector2(
+                UnityEngine.Random.Range(-200f, 200f),
+                UnityEngine.Random.Range(-150f, 150f)
+            );
+
+            // burst outward
+            rt.DOMove(
+                (Vector2)rt.position + randomOffset,
+                0.5f
+            ).SetEase(Ease.OutQuad);
+
+            // scale pop
+            rt.DOScale(0f, 0.6f)
+                .SetEase(Ease.InBack);
+
+            // fade
+            CanvasGroup cg =
+                sparkle.GetComponent<CanvasGroup>();
+
+            cg.DOFade(0f, 0.6f);
+
+            Destroy(sparkle, 0.8f);
         }
     }
 }

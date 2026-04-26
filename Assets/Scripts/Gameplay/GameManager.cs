@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
 
     private int coin = 100;
 
+    [SerializeField] private WheelRotator wheelRotator;
+
     private void Awake()
     {
         Instance = this;
@@ -31,19 +33,40 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        zone = 1; 
+        zone = 1;
+        // GameManager listens to VISUAL result only
+        wheelRotator.OnSpinFinished += HandleSpinFinished;
+
+        // First wheel setup
+        RewardManager.Instance.RandomizeRewards();
     }
+
+    private void OnDisable()
+    {
+        wheelRotator.OnSpinFinished -= HandleSpinFinished;
+    }
+
     public void TurnWheel()
     {
+        // Only generate target and start visual spin
         int randomIdx = RewardManager.Instance.GenerateRandomRewardIdx();
 
-        OnWheelRotated?.Invoke(randomIdx);
+        wheelRotator.StartSpin(randomIdx);
+    }
+
+    private void HandleSpinFinished(int rewardIndex)
+    {
+        // Game flow happens here AFTER animation ends
+
+        RewardManager.Instance.AddReward(rewardIndex);
+
+        if (gameState == GameState.GameOver)
+            return;
 
         zone++;
 
         RewardManager.Instance.RandomizeRewards();
     }
-
     public void ChangeGameState(GameState state)
     {
         gameState = state;
