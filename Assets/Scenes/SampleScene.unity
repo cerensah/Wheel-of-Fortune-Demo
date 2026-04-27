@@ -639,7 +639,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -62.500813, y: 250.00002}
+  m_AnchoredPosition: {x: -62.500813, y: 250.00008}
   m_SizeDelta: {x: 124, y: 500}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &253740756
@@ -1328,7 +1328,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 841634557}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99712914
+  m_Size: 0.9999447
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3434,6 +3434,7 @@ MonoBehaviour:
   displayPanel: {fileID: 689635633}
   displayImage: {fileID: 1550562956}
   sparklePrefab: {fileID: 6799320148345641657, guid: 408ce7a3775cc6341b3acc00514bc53b, type: 3}
+  rewardSfxPrefab: {fileID: 6714479593440412107, guid: e39019327ef16b242b2b178cb45dedf2, type: 3}
 --- !u!4 &846454927
 Transform:
   m_ObjectHideFlags: 0
@@ -5412,7 +5413,7 @@ Transform:
   m_GameObject: {fileID: 1559436259}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 524.4051, y: 381.65967, z: -2.383382}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5432,6 +5433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obj: {fileID: 1377261649}
   spinButton: {fileID: 1366053054}
+  turnSfxPrefab: {fileID: 6714479593440412107, guid: c64e24dd9bebc1940a0a4e62bb7994cb, type: 3}
 --- !u!1 &1638214148
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,6 +29,7 @@ public class WheelRewardsUIManager : MonoBehaviour
     [Header("Current Reward VFX")]
     [SerializeField] private GameObject displayPanel, displayImage;
     [SerializeField] private GameObject sparklePrefab;
+    [SerializeField] private GameObject rewardSfxPrefab;
 
 
     private void Start()
@@ -113,6 +114,9 @@ public class WheelRewardsUIManager : MonoBehaviour
 
     private void RewardMoveAnimation()
     {
+        GameObject sfx = Instantiate(rewardSfxPrefab, transform);
+        Destroy(sfx, 1f);
+
         RectTransform rect = displayImage.GetComponent<RectTransform>();
         rect.transform.position = displayPanel.transform.position;
 

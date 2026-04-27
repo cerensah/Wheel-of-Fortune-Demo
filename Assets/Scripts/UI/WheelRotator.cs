@@ -8,6 +8,7 @@ public class WheelRotator : MonoBehaviour
 {
     [SerializeField] private GameObject obj;
     [SerializeField] private Button spinButton;
+    [SerializeField] private GameObject turnSfxPrefab;
 
     public event Action<int> OnSpinFinished;
 
@@ -42,6 +43,9 @@ public class WheelRotator : MonoBehaviour
 
     private IEnumerator SpinTo(float targetAngle)
     {
+        GameObject sfx = Instantiate(turnSfxPrefab, transform);
+        Destroy(sfx, 2f);
+
         spinButton.interactable = false; //to make sure user does not spam turn button and get extra rewards
 
         float duration = 3f;
