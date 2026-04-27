@@ -8,6 +8,7 @@ public class GameOverUIManager : MonoBehaviour
     [SerializeField] private GameObject panel;
     [SerializeField] private Button giveUpButton;
     [SerializeField] private Button reviveButton;
+    [SerializeField] private GameObject gameOverSfxPrefab;
 
     //game manager is execcuted after this script so better subscribe in Start than onEnable
     //think of a better solution??
@@ -23,6 +24,9 @@ public class GameOverUIManager : MonoBehaviour
     private void InitPanel()
     {
         panel.gameObject.SetActive(true);
+
+        GameObject sfx = Instantiate(gameOverSfxPrefab, transform);
+        Destroy(sfx, 1f);
 
         giveUpButton.onClick.RemoveAllListeners();
         giveUpButton.onClick.AddListener(OnGiveUpClicked);

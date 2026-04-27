@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class WheelRewardsUIManager : MonoBehaviour
 {
@@ -27,9 +28,13 @@ public class WheelRewardsUIManager : MonoBehaviour
     [SerializeField] private GameObject collectedRewardPrefab;
 
     [Header("Current Reward VFX")]
-    [SerializeField] private GameObject displayPanel, displayImage;
+    [SerializeField] private GameObject displayPanel;
+    [SerializeField] private GameObject displayImage;
     [SerializeField] private GameObject sparklePrefab;
     [SerializeField] private GameObject rewardSfxPrefab;
+
+    [Header("Zone Count UI")]
+    [SerializeField] private TextMeshProUGUI zoneText;
 
 
     private void Start()
@@ -56,6 +61,11 @@ public class WheelRewardsUIManager : MonoBehaviour
 
     private void RefreshWheelUI()
     {
+
+        zoneText.text = GameManager.Instance.zone.ToString();
+
+        bool safeZone = (GameManager.Instance.zone % 5 == 0) || (GameManager.Instance.zone == 1);
+        zoneText.color = safeZone ? Color.green : Color.white;
 
         var rewards = RewardManager.Instance.GetCurrentWheelRewards();
 
