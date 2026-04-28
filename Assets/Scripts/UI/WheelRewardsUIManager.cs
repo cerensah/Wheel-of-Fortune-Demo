@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class WheelRewardsUIManager : MonoBehaviour
 {
