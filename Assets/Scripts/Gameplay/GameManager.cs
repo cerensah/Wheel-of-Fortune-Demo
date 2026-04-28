@@ -98,6 +98,10 @@ public class GameManager : MonoBehaviour
         return hasRevived;
     }
 
+    public bool IsSafeZone()
+    {
+        return (zone % 5 == 0) || (zone == 1);
+    }
     public void RefreshGame()
     {
         zone = 1;

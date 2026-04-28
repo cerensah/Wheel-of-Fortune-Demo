@@ -10,6 +10,7 @@ public class WheelRotator : MonoBehaviour
     [SerializeField] private Button spinButton;
     [SerializeField] private GameObject turnSfxPrefab;
 
+    public event Action OnSpinStart;
     public event Action<int> OnSpinFinished;
 
     private int targetIndex;
@@ -29,6 +30,7 @@ public class WheelRotator : MonoBehaviour
             (360f * 4) + (index * sliceAngle);
 
         StartCoroutine(SpinTo(targetAngle));
+        OnSpinStart?.Invoke();
     }
 
 

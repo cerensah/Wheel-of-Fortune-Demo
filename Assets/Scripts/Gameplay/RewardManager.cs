@@ -51,7 +51,7 @@ public class RewardManager : MonoBehaviour
 
         zone = GameManager.Instance.zone;
 
-        bool safeZone = (zone % 5 == 0) || (zone == 1);
+        bool safeZone = GameManager.Instance.IsSafeZone();
 
         //only add bomb if the level is not a multiple of 5 or we arnt in the first level
         if (!safeZone)
