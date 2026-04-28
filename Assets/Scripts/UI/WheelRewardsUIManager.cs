@@ -36,6 +36,8 @@ public class WheelRewardsUIManager : MonoBehaviour
     [Header("Zone Count UI")]
     [SerializeField] private TextMeshProUGUI zoneText;
 
+    Dictionary<string, CollectedRewardUI> collectedUIDict = new();
+
 
     private void Start()
     {
@@ -96,11 +98,11 @@ public class WheelRewardsUIManager : MonoBehaviour
     }
 
 
-    private void RunRewardVFX(WheelReward reward)
+    private void RunRewardVFX(WheelReward reward, bool exists)
     {
-        StartCoroutine(AddCollectedRewardUI(reward));
+        StartCoroutine(AddCollectedRewardUI(reward,exists));
     }
-    private IEnumerator AddCollectedRewardUI(WheelReward reward)
+    private IEnumerator AddCollectedRewardUI(WheelReward reward, bool e)
     {
         displayPanel.SetActive(true);
         displayImage.GetComponent<Image>().sprite = reward.data.icon;
@@ -110,13 +112,26 @@ public class WheelRewardsUIManager : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        GameObject rewardObj = Instantiate(collectedRewardPrefab, collectedRewardParent);
-        rewardObj.GetComponent<CollectedRewardUI>().Init(reward.data.icon, reward.amount);
+        if (!e)
+        {
+            GameObject rewardObj = Instantiate(collectedRewardPrefab, collectedRewardParent);
+            CollectedRewardUI uiComponent = rewardObj.GetComponent<CollectedRewardUI>();
+            uiComponent.Init(reward.data.icon, reward.amount, reward.data.item_id);
+            collectedUIDict.Add(reward.data.item_id, uiComponent);
+        }
+        else
+        {
+            collectedUIDict[reward.data.item_id].ChangeAmount(reward.amount);
+        }
+
     }
+
 
     private void ClearCollectedUI()
     {
-        foreach(Transform child in collectedRewardParent)
+        collectedUIDict.Clear();
+
+        foreach (Transform child in collectedRewardParent)
         {
             Destroy(child.gameObject);
         }

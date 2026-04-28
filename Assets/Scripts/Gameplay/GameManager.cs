@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
     public int zone;
     private GameState gameState = GameState.Default;
 
-    public event Action<int> OnWheelRotated;
     public event Action OnGameOver;
     public event Action OnGiveUp;
 

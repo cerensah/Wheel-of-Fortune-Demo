@@ -18,7 +18,7 @@ public class RewardManager : MonoBehaviour
     [SerializeField] private List<WheelReward> collectedRewards = new List<WheelReward>();
 
     public event Action OnRewardRandomized;
-    public event Action<WheelReward> OnRewardPicked;
+    public event Action<WheelReward, bool> OnRewardPicked;
 
     private int zone = 1;
 
@@ -31,7 +31,6 @@ public class RewardManager : MonoBehaviour
     {
         if(GameManager.Instance != null)
         {
-            GameManager.Instance.OnWheelRotated += AddReward;
             GameManager.Instance.OnGiveUp += ClearCollectedRewards;
         }
 
@@ -42,7 +41,6 @@ public class RewardManager : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.OnWheelRotated -= AddReward;
             GameManager.Instance.OnGiveUp -= ClearCollectedRewards;
         }
 
@@ -58,7 +56,6 @@ public class RewardManager : MonoBehaviour
         //only add bomb if the level is not a multiple of 5 or we arnt in the first level
         if (!safeZone)
         {
-            Debug.Log($"zone is {zone} adding bomb");
             currentWheelRewards.Add(new WheelReward
             {
                 data = bomb,
@@ -96,9 +93,24 @@ public class RewardManager : MonoBehaviour
             return;
         }
 
+        var exists = RewardExists(reward.data.item_id);
+        if (exists != null)
+        {
+            exists.amount += reward.amount;
+
+            OnRewardPicked?.Invoke(exists, true);
+
+            return;
+        }
+
         collectedRewards.Add(reward);
 
-        OnRewardPicked?.Invoke(reward);
+        OnRewardPicked?.Invoke(reward, false);
+    }
+
+    private WheelReward RewardExists(string id)
+    {
+        return collectedRewards.Find(x => x.data.item_id == id);
     }
 
     public List<WheelReward> GetCurrentWheelRewards()
@@ -110,7 +122,7 @@ public class RewardManager : MonoBehaviour
     {
         switch (importance)
         {
-            case (RewardImportance.Low): return UnityEngine.Random.Range(zone * 50 , zone * 150); 
+            case (RewardImportance.Low): return UnityEngine.Random.Range(zone * 10 , zone * 100); 
             case (RewardImportance.Medium): return UnityEngine.Random.Range(zone * 1, zone * 5);
             case (RewardImportance.High): return UnityEngine.Random.Range(1, 5);
             default:

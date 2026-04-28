@@ -49,6 +49,7 @@ public class GameOverUIManager : MonoBehaviour
         if(GameManager.Instance.GetRevived() != true && 
             GameManager.Instance.HasEnoughCoins(GlobalVariables.reviveCost))
         {
+            GameManager.Instance.ChangeGameState(GameState.Default);
             GameManager.Instance.SetRevived(true);
         }
 
